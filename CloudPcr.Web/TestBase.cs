@@ -25,8 +25,9 @@ namespace CloudPcr.Web
 
             public static void BeginExecution()
             {
-
-                driver = new ChromeDriver();
+            ChromeOptions option = new ChromeOptions();
+                option.AddArgument("--headless");
+                driver = new ChromeDriver(option);
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
                 driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
                 driver.Manage().Window.Maximize();
