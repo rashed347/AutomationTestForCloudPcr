@@ -9,7 +9,16 @@ namespace CloudPcr.Tests
         [Test]
         public void ShouldLoginToCloudPcrWithValidCredential()
         {
-            CldWeb.LoginPage.Login("ratul", "one_2_three").IsDashboardTitleDisplayed();
+            Assert.That(CldWeb.LoginPage.Login("ratul", "one_2_three")
+                .IsDashboardTitleDisplayed(), "User Failed to login");
+            
+        }
+
+        [Test]
+        public void LoginWithInvalidCredential()
+        {
+            Assert.That(CldWeb.LoginPage.Login("ra1", "one_2_three")
+                .IsDashboardTitleDisplayed(), "User can't Login");
         }
     }
 }

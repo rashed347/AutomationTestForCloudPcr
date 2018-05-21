@@ -11,5 +11,13 @@ namespace CloudPcr.Web
                 return new LoginPObject();
             }
         }
+
+        public static DashboardPObject DashboardPage
+        {
+            get
+            {
+                return new DashboardPObject();
+            }
+        }
     }
 }
