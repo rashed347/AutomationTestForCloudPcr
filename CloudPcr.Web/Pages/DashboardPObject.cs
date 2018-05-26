@@ -15,6 +15,7 @@ namespace CloudPcr.Web.Pages
 
         public string DashboardText()
         {
+            
             return DashboardTitle.Text;
         }
     }

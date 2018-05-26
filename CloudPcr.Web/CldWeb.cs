@@ -19,5 +19,13 @@ namespace CloudPcr.Web
                 return new DashboardPObject();
             }
         }
+
+        public static NavigationMenuObject NavigationMenu
+        {
+            get
+            {
+                return new NavigationMenuObject();
+            }
+        }
     }
 }

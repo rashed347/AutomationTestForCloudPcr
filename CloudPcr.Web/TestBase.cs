@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -26,8 +27,9 @@ namespace CloudPcr.Web
             public static void BeginExecution()
             {
             ChromeOptions option = new ChromeOptions();
-                option.AddArgument("--headless");
-                driver = new ChromeDriver(option);
+            option.AddArgument("--headless");
+           
+            driver = new ChromeDriver(option);
                 driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(60);
                 driver.Manage().Timeouts().PageLoad = TimeSpan.FromSeconds(60);
                 driver.Manage().Window.Maximize();
