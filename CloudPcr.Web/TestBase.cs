@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Reflection;
+using AutomationTestForCloudPcr.Reporting;
 using NUnit.Framework;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
@@ -15,17 +18,23 @@ namespace CloudPcr.Web
             [SetUp]
             public void TestSetup()
             {
-                driver.Navigate().GoToUrl("http://bridge-app.azurewebsites.net/account/login");
+            ReportingManager.Instance.StartTest(TestContext.CurrentContext.Test.Name);
+            driver.Navigate().GoToUrl("http://bridge-app.azurewebsites.net/account/login");
             }
 
             [TearDown]
             public void TestCleanUp()
             {
-                driver.Manage().Cookies.DeleteAllCookies();
+            ReportingManager.Instance.FinalizeTest(driver);
+            driver.Manage().Cookies.DeleteAllCookies();
             }
 
             public static void BeginExecution()
             {
+            var directoryInfo = Directory.GetParent(Assembly.GetExecutingAssembly().Location.ToString());
+            ReportingManager.Instance.LoadConfig(directoryInfo.FullName + "\\extent-config.xml");
+            ReportingManager.Instance.AddSystemInfo("Browser", "Chrome");
+
             ChromeOptions option = new ChromeOptions();
             //option.AddArgument("--headless");
            
@@ -41,7 +50,8 @@ namespace CloudPcr.Web
                 {
                     driver.Quit();
                 }
-            }
+            ReportingManager.Instance.CleanUpReporting();
+        }
         }
     }
 

@@ -1,19 +1,20 @@
-﻿using OpenQA.Selenium;
+﻿using AutomationTestForCloudPcr.Elements;
+using OpenQA.Selenium;
 
 namespace CloudPcr.Web.Pages
 {
-   public class LoginPObject
+    public class LoginPObject
     {
-        protected IWebElement LoginPageTitle { get; set; }
+        protected IWebElement LoginPageTitle => TestBase.driver.FindElement(By.XPath(".//h3[@class = 'm-login__title']"));
 
-        protected IWebElement UserName { get; set; }
+        protected IWebElement UserName => TestBase.driver.FindElement(By.XPath(".//input[@name = 'userNameOrEmailAddress']"),10);
 
-        protected IWebElement Password { get; set; }
+        protected IWebElement Password => TestBase.driver.FindElement(By.XPath(".//input[@name = 'password']"));
 
-        protected IWebElement LoginBtn { get; set; }
+        protected IWebElement LoginBtn => TestBase.driver.FindElement(By.XPath(".//button[@type = 'submit']"));
 
-        
-        
+
+
         /// <summary>
         /// Determines whether [is title displayed].
         /// </summary>
@@ -23,8 +24,12 @@ namespace CloudPcr.Web.Pages
 
         public bool IsTitleDisplayed()
         {
-            LoginPageTitle = TestBase.driver.FindElement(By.XPath(".//h3[@class = 'm-login__title']"));
             return LoginPageTitle.Displayed;
+        }
+
+        public bool IsAtPage()
+        {
+            return LoginBtn.Displayed;
         }
         /// <summary>
         /// Logins the with invalid credential.
@@ -36,6 +41,12 @@ namespace CloudPcr.Web.Pages
         {
             PerformLogin(userName, password);
             return new LoginErrorPObject();
+        }
+
+        public LoginPObject LoginWithoutCredential(string userName, string password){
+
+            PerformLogin(userName, password);
+            return this;
         }
 
         /// <summary>
@@ -52,13 +63,8 @@ namespace CloudPcr.Web.Pages
 
         private void PerformLogin(string userName, string password)
         {
-            UserName = TestBase.driver.FindElement(By.XPath(".//input[@name = 'userNameOrEmailAddress']"));
             UserName.SendKeys(userName);
-
-            Password = TestBase.driver.FindElement(By.XPath(".//input[@name = 'password']"));
             Password.SendKeys(password);
-
-            LoginBtn = TestBase.driver.FindElement(By.XPath(".//button[@type = 'submit']"));
             LoginBtn.Click();
         }
 
